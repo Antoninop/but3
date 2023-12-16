@@ -28,13 +28,23 @@ class Program
 
             foreach (var ligne in lignes)
             {
+
+                string[] colonnes = ligne.Split(';');
+
+
+
                 if (premiereLigne)
                 {
                     premiereLigne = false;
                     continue;
                 }
 
-                string[] colonnes = ligne.Split(';');
+                if (!int.TryParse(colonnes[0], out _))
+                {
+                    continue;
+                }
+
+
 
                 Etudiant etudiant = new Etudiant();
 
@@ -42,21 +52,22 @@ class Program
                 etudiant.Prenom = colonnes[6];
                 etudiant.Notes = new List<float>();
 
-                for (int i = 0; i < 3; i++)
+                var debutNote = 14;
+
+                for (int i = 0; i < 17; i++)
                 {
-                    // Vérifiez si la note est présente et n'est pas une chaîne vide
-                    if (!string.IsNullOrWhiteSpace(colonnes[14 + i]))
+                    
+                    if (!string.IsNullOrWhiteSpace(colonnes[debutNote + i]))
                     {
-                        // Convertissez la chaîne en float
+                        // Convertion en float
                         float note;
-                        if (float.TryParse(colonnes[14 + i].Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out note))
+                        if (float.TryParse(colonnes[debutNote + i].Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out note))
                         {
                             etudiant.Notes.Add(note);
                         }
                         else
                         {
-                            // Gestion des cas où la conversion échoue
-                            Console.WriteLine($"Erreur de conversion de la note à la colonne {14 + i} pour l'étudiant {etudiant.Nom} {etudiant.Prenom}");
+                            Console.WriteLine($"Erreur  {debutNote + i}  {etudiant.Nom} {etudiant.Prenom}");
                         }
                     }
                 }
