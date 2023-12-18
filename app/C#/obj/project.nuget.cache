@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DJZlfRneyIZ0Z4M5lDC1I5dSNROuTUuEok8kOZCb+dMrKxHFKgizgGmVAkWq2SwoTgT/c1sExFHC9iVh9/xlOA==",
+  "dgSpecHash": "29hre/0Hj5cSF034aeKNBhj4XSgOLK8WvtkdMGUXfUAbA7Csr+xtY+dd7dEaOYjeKgvNS8LcU14O4KSGd4WCcg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\steam\\Desktop\\but3\\app\\ConsoleApp1\\ConsoleApp1.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\steam\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.25\\microsoft.windowsdesktop.app.ref.6.0.25.nupkg.sha512",
-    "C:\\Users\\steam\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.25\\microsoft.netcore.app.ref.6.0.25.nupkg.sha512",
-    "C:\\Users\\steam\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.25\\microsoft.aspnetcore.app.ref.6.0.25.nupkg.sha512",
-    "C:\\Users\\steam\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.25\\microsoft.netcore.app.host.win-x64.6.0.25.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\Steam\\Desktop\\but3\\app\\C#\\ConsoleApp1.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

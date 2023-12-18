@@ -1,44 +1,27 @@
 # -*- coding: utf-8 -*-
-from unidecode import unidecode
-from colorama import init, Fore
 
-# Initialiser colorama
-init()
+with open("../../sortiez.txt", "r") as fichier:
+    lignes = fichier.readlines()
 
-def calculer_moyenne_ponderee(notes, coefs):
-    if len(notes) != len(coefs):
-        raise ValueError("Le nombre de notes ne correspond pas au nombre de coefficients.")
+coefs_texte = lignes[0].split(';')
+notes_texte = lignes[1].split(';')
 
-    somme_notes_ponderees = sum(note * coef for note, coef in zip(notes, coefs))
+
+for ligne in lignes[1:]:
+    # Extraire les notes de chaque ligne
+    notes_texte = ligne.split(';')
+    
+    # Extraire le nom et prénom de l'élève
+    nom_prenom = notes_texte[0].split(',')
+    nom = notes_texte[0]
+    prenom = notes_texte[1]
+
+    # Calculer la moyenne pondérée
+    # Convertir coef en float 
+    coefs = [float(coef.replace(',', '.')) for coef in coefs_texte[0:]]
+    notes = [float(notes.replace(',', '.')) for notes in notes_texte[2:]]
+    somme_produits = sum(coef * note for coef, note in zip(coefs, notes))
     somme_coefs = sum(coefs)
-    moyenne_ponderee = somme_notes_ponderees / somme_coefs if somme_coefs != 0 else 0
+    moyenne_ponderee = somme_produits / somme_coefs
 
-    return moyenne_ponderee
-
-def lire_fichier_et_calculer_moyennes(chemin_fichier):
-    with open(chemin_fichier, 'r', encoding='utf-8') as fichier:
-        lignes = fichier.readlines()
-
-    # Extraction des coefficients depuis la première ligne
-    coefs = list(map(float, lignes[0].strip().split(';')))
-
-    resultats = []
-
-    # Lecture des lignes d'étudiants et calcul des moyennes
-    for ligne in lignes[1:]:
-        colonnes = ligne.strip().split(';')
-        prenom, nom = map(unidecode, colonnes[:2])  # Translittération
-        notes = list(map(float, colonnes[2:]))
-        
-        moyenne_ponderee = calculer_moyenne_ponderee(notes, coefs)
-        resultats.append((prenom, nom, moyenne_ponderee))
-
-    return resultats
-
-# Exemple d'utilisation
-chemin_fichier_txt = "chemin/vers/votre/fichier.txt"
-resultats = lire_fichier_et_calculer_moyennes(chemin_fichier_txt)
-
-# Affichage des résultats avec colorama
-for prenom, nom, moyenne in resultats:
-    print(f"{Fore.CYAN}{prenom} {nom} - Moyenne pondérée : {moyenne:.2f}{Fore.RESET}")
+    print(nom,prenom,moyenne_ponderee)

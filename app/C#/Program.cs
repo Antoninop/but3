@@ -89,7 +89,7 @@ class Program
 
                 for (int i = 0; i < coefsEtudiants.Count; i++)
                 {
-                    writer.WriteLine($" {string.Join(", ", coefsEtudiants[i].Select(c => c.ToString("F2")))}");
+                    writer.WriteLine($" {string.Join("; ", coefsEtudiants[i].Select(c => c.ToString("F2")))}");
                 }
 
         
@@ -100,7 +100,7 @@ class Program
                 for (int i = 0; i < prenomsEtudiants.Count; i++)
                 {
                     // Écriture des données
-                    string ligne = $"{nomsEtudiants[i]};{prenomsEtudiants[i]};{string.Join(", ", notesEtudiants[i].Select(n => n.ToString("F2")))}";
+                    string ligne = $"{nomsEtudiants[i]};{prenomsEtudiants[i]};{string.Join("; ", notesEtudiants[i].Select(n => n.ToString("F2")))}";
                     writer.WriteLine(ligne);
                 }
             }
