@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
+using System.Linq;
 
 struct Etudiant
 {
@@ -18,6 +19,7 @@ class Program
         List<string> prenomsEtudiants = new List<string>();
         List<string> nomsEtudiants = new List<string>();
         List<List<float>> notesEtudiants = new List<List<float>>();
+        List<List<float>> coefsEtudiants = new List<List<float>>();
 
         try
         {
@@ -28,10 +30,7 @@ class Program
 
             foreach (var ligne in lignes)
             {
-
                 string[] colonnes = ligne.Split(';');
-
-
 
                 if (premiereLigne)
                 {
@@ -41,10 +40,15 @@ class Program
 
                 if (!int.TryParse(colonnes[0], out _))
                 {
+                    if (colonnes[3] == "Coef.")
+                    {
+                        // récupère les coefs
+                        var coefs = colonnes.Skip(4).Where(s => float.TryParse(s, out _)).Select(float.Parse).ToList();
+                        coefsEtudiants.Add(coefs);
+                        Console.WriteLine("Coefs : " + string.Join(", ", coefs));
+                    }
                     continue;
                 }
-
-
 
                 Etudiant etudiant = new Etudiant();
 
@@ -56,7 +60,6 @@ class Program
 
                 for (int i = 0; i < 17; i++)
                 {
-                    
                     if (!string.IsNullOrWhiteSpace(colonnes[debutNote + i]))
                     {
                         // Convertion en float
@@ -77,16 +80,32 @@ class Program
                 notesEtudiants.Add(etudiant.Notes);
             }
 
-            Console.WriteLine("Etudiants:");
-            Console.WriteLine();
-
-            for (int i = 0; i < prenomsEtudiants.Count; i++)
+            // Écriture dans un fichier TXT
+            string cheminSortieTXT = "../../../../sortiez.txt";
+            using (StreamWriter writer = new StreamWriter(cheminSortieTXT))
             {
-                Console.WriteLine("Nom: " + nomsEtudiants[i]);
-                Console.WriteLine("Prenom: " + prenomsEtudiants[i]);
-                Console.WriteLine("Notes: " + string.Join(", ", notesEtudiants[i].Select(n => n.ToString("F2"))));
-                Console.WriteLine();
+                // Écriture des coefficients
+                
+
+                for (int i = 0; i < coefsEtudiants.Count; i++)
+                {
+                    writer.WriteLine($" {string.Join(", ", coefsEtudiants[i].Select(c => c.ToString("F2")))}");
+                }
+
+        
+
+                // Écriture des notes
+                
+
+                for (int i = 0; i < prenomsEtudiants.Count; i++)
+                {
+                    // Écriture des données
+                    string ligne = $"{nomsEtudiants[i]};{prenomsEtudiants[i]};{string.Join(", ", notesEtudiants[i].Select(n => n.ToString("F2")))}";
+                    writer.WriteLine(ligne);
+                }
             }
+
+            Console.WriteLine($"Les données ont été écrites dans le fichier TXT : {cheminSortieTXT}");
         }
         catch (Exception ex)
         {
